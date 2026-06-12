@@ -133,7 +133,7 @@ const syncCommand = Command.make(
   }),
 ).pipe(
   Command.withDescription(
-    "Infer stack links from code-host target branches (GitHub PRs / GitLab MRs), clean stale metadata, repair branches, retarget changes, and refresh stack links. If branch is omitted and the current branch is on a stack, sync only that stack; otherwise sync the repo. By default this is a dry run. Add --apply to mutate branches, changes, and stack metadata.",
+    "Infer stack links from code-host target branches (GitHub PRs / GitLab MRs / Azure DevOps pull requests), clean stale metadata, repair branches, retarget changes, and refresh stack links. If branch is omitted and the current branch is on a stack, sync only that stack; otherwise sync the repo. By default this is a dry run. Add --apply to mutate branches, changes, and stack metadata.",
   ),
   Command.withExamples([
     {
