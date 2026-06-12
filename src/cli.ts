@@ -16,6 +16,7 @@ import { renderStatus } from "./format.ts";
 import * as Proc from "./platform/proc.ts";
 import { parseBlockLinkConfig, parseTrunksConfig, StackConfig, trunks } from "./services/Config.ts";
 import { CodeHost } from "./services/CodeHost.ts";
+import { CodeHostAzureDevOps } from "./services/code-host/AzureDevOps.ts";
 import { CodeHostGitHub } from "./services/code-host/GitHub.ts";
 import { CodeHostGitLab } from "./services/code-host/GitLab.ts";
 import { Git } from "./services/Git.ts";
@@ -164,7 +165,7 @@ const doctorCommand = Command.make(
   }),
 ).pipe(
   Command.withDescription(
-    "Check local Git, code host (GitHub or GitLab), stack metadata, trunk branches, and undo journal health without changing anything.",
+    "Check local Git, code host (GitHub, GitLab, or Azure DevOps), stack metadata, trunk branches, and undo journal health without changing anything.",
   ),
 );
 
@@ -354,7 +355,9 @@ const live = (() => {
       const explicit = CodeHost.providerFrom(explicitValue);
       if (explicitValue && !explicit) {
         return yield* Effect.fail(
-          new Error(`invalid code host '${explicitValue}'; expected github or gitlab`),
+          new Error(
+            `invalid code host '${explicitValue}'; expected github, gitlab, or azuredevops`,
+          ),
         );
       }
       const detected = remoteOut ? CodeHost.detectProvider(remoteOut) : null;
@@ -362,11 +365,15 @@ const live = (() => {
       if (!provider) {
         return yield* Effect.fail(
           new Error(
-            "unable to determine the code host; configure it with: git config stack.codeHost github|gitlab",
+            "unable to determine the code host; configure it with: git config stack.codeHost github|gitlab|azuredevops",
           ),
         );
       }
-      return provider === "gitlab" ? CodeHostGitLab.layer : CodeHostGitHub.layer;
+      return provider === "gitlab"
+        ? CodeHostGitLab.layer
+        : provider === "azuredevops"
+          ? CodeHostAzureDevOps.layer
+          : CodeHostGitHub.layer;
     }),
   ).pipe(Layer.provide(cfg));
   const store = Store.live.pipe(Layer.provideMerge(cfg));

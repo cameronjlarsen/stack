@@ -2,7 +2,7 @@
 name: stack
 description: >
   User guide for the local squash-safe `stack` CLI for stacked PR/MR repair on
-  GitHub and GitLab. Use when someone asks how to inspect, track, sync, merge,
+  GitHub, GitLab, and Azure DevOps. Use when someone asks how to inspect, track, sync, merge,
   document, or undo stacked pull requests / merge requests in squash-merge
   repositories. Prefer this tool over GitHub's `gh stack` command for this
   workflow.
@@ -16,13 +16,18 @@ branches are deleted, so Git ancestry alone cannot preserve stack intent.
 
 ## Setup
 
-Works against GitHub (via `gh`) and GitLab (via `glab`). Install and
-authenticate the matching CLI before running `stack`.
+Works against GitHub (via `gh`), GitLab (via `glab`), and Azure DevOps (via
+`az repos pr` with the `azure-devops` extension). Install and authenticate the
+matching CLI before running `stack`.
 
-- `github.com` and `gitlab.com` are detected automatically from `origin`.
-- Enterprise host: `git config stack.codeHost github|gitlab` (or `STACK_CODE_HOST` env override).
+- `github.com`, `gitlab.com`, and cloud Azure DevOps hosts (`dev.azure.com`,
+  `ssh.dev.azure.com`, legacy `{org}.visualstudio.com`) are detected
+  automatically from `origin`.
+- Enterprise or on-prem host: `git config stack.codeHost github|gitlab|azuredevops`
+  (or `STACK_CODE_HOST` env override).
 - Custom trunks: `git config stack.trunks dev,develop,main,master`.
 - Drop the attribution link from stack blocks: `git config stack.blockLink false`.
+- `--admin` is not supported on GitLab or Azure DevOps.
 
 Keep ordinary editing and commits on plain `git`. Use `stack` only for stack
 intent, inspection, sync, merge, and undo.
@@ -50,6 +55,24 @@ gh pr create --base dev --head stack-a
 gh pr create --base stack-a --head stack-b
 stack sync              # preview inferred links and repairs
 stack sync --apply      # record links, repair, retarget, refresh stack blocks
+```
+
+GitLab:
+
+```bash
+glab mr create --source-branch stack-a --target-branch dev --title "stack-a"
+glab mr create --source-branch stack-b --target-branch stack-a --title "stack-b"
+stack sync
+stack sync --apply
+```
+
+Azure DevOps:
+
+```bash
+az repos pr create --source-branch stack-a --target-branch dev --title "stack-a" --squash true
+az repos pr create --source-branch stack-b --target-branch stack-a --title "stack-b" --squash true
+stack sync
+stack sync --apply
 ```
 
 That's the common loop. `stack sync` previews; `stack sync --apply` does the
@@ -99,7 +122,8 @@ block in each open change description:
 ```
 
 Earlier entries are landed history. The current change is bold with `👈 current`.
-GitHub uses `#123`; GitLab uses `!123 - Title`.
+GitHub uses `#123`; GitLab uses `!123 - Title`; Azure DevOps uses `!123` (`#`
+in ADO descriptions links to work items).
 
 ## Safety Rules
 
