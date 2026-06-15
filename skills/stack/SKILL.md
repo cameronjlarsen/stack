@@ -28,6 +28,10 @@ matching CLI before running `stack`.
 - Custom trunks: `git config stack.trunks dev,develop,main,master`.
 - Drop the attribution link from stack blocks: `git config stack.blockLink false`.
 - `--admin` is not supported on GitLab or Azure DevOps.
+- Azure DevOps does not expose fork `headRepository` routing through `az repos pr`.
+  Label-on-create uses REST after PR creation when supported; otherwise create still
+  succeeds without labels. Run `stack doctor` to verify `az`, the `azure-devops`
+  extension, and auth before sync or merge.
 
 Keep ordinary editing and commits on plain `git`. Use `stack` only for stack
 intent, inspection, sync, merge, and undo.
@@ -84,7 +88,8 @@ work. Repeat after any parent branch changes or a squash merge lands.
   change titles when the code host is available).
 - `stack skill` — print this skill for AI agent discovery.
 - `stack doctor` — check Git, code-host access, stack metadata, trunks, and undo
-  journal health without mutating anything.
+  journal health without mutating anything. For Azure DevOps, doctor also checks
+  `az`, the `azure-devops` extension, and pull-request access.
 - `stack track <branch> --onto <parent>` — manually record stack intent only
   when target branches don't already encode it.
 - `stack sync [branch]` — preview inferred links and repairs (non-mutating).
