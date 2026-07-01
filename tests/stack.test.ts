@@ -2707,8 +2707,9 @@ describe("AzureDevOps", () => {
       yield* ado.edit(11542, "refs/heads/dev");
 
       expect(calls.filter((call) => call[0] === "az" && call[1] === "rest")).toEqual([]);
-      expect(calls.filter((call) => call[0] === "az" && call[2] === "pr" && call[3] === "show"))
-        .toHaveLength(2);
+      expect(
+        calls.filter((call) => call[0] === "az" && call[2] === "pr" && call[3] === "show"),
+      ).toHaveLength(2);
     }).pipe(Effect.provide(adoLayer(proc)));
   });
 

@@ -56,7 +56,10 @@ export const resolveWindowsAzFromInstall = (
   return { command: python, prefix: ["-X", "utf8", "-IBm", "azure.cli"] };
 };
 
-const resolveWindowsAz = (): { readonly command: string; readonly prefix: ReadonlyArray<string> } | null => {
+const resolveWindowsAz = (): {
+  readonly command: string;
+  readonly prefix: ReadonlyArray<string>;
+} | null => {
   if (process.platform !== "win32") return null;
   const azCmd = findWindowsAzCmd();
   if (!azCmd) return null;
@@ -79,7 +82,11 @@ export const spawnCommand = (
   tool: string,
   args: ReadonlyArray<string>,
   cwd: string,
-): { readonly command: string; readonly args: ReadonlyArray<string>; readonly options: ChildProcess.CommandOptions } => {
+): {
+  readonly command: string;
+  readonly args: ReadonlyArray<string>;
+  readonly options: ChildProcess.CommandOptions;
+} => {
   const base = {
     cwd,
     stdout: "pipe" as const,

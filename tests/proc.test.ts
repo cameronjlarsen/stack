@@ -17,7 +17,9 @@ describe("pickWindowsAzExecutable", () => {
   });
 
   it("falls back to the first line when no cmd shim exists", () => {
-    expect(pickWindowsAzExecutable(["C:\\tools\\az.bat", "C:\\tools\\az"])).toBe("C:\\tools\\az.bat");
+    expect(pickWindowsAzExecutable(["C:\\tools\\az.bat", "C:\\tools\\az"])).toBe(
+      "C:\\tools\\az.bat",
+    );
     expect(pickWindowsAzExecutable(["C:\\tools\\az"])).toBe("C:\\tools\\az");
   });
 
