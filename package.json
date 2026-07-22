@@ -1,5 +1,5 @@
 {
-  "name": "@kitlangton/stack",
+  "name": "@cameronjlarsen/stack",
   "version": "0.4.2",
   "description": "Squash-safe stacked PR/MR repair CLI for GitHub, GitLab, and Azure DevOps",
   "keywords": [
@@ -34,7 +34,7 @@
   "type": "module",
   "publishConfig": {
     "access": "public",
-    "provenance": true,
+    "provenance": false,
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
@@ -47,7 +47,6 @@
     "format:check": "oxfmt --check .",
     "lint": "oxlint",
     "package:smoke": "bun run build && npm pack --dry-run",
-    "prepare": "bun install --ignore-scripts && bun run build",
     "prepack": "bun run build",
     "release": "bun run package:smoke && npm exec --package @changesets/cli@2.31.0 -- changeset publish",
     "typecheck": "tsc --noEmit",
