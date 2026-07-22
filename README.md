@@ -18,15 +18,23 @@ inspection, repair, merge, and undo workflows.
 
 ## Install
 
+Requires [Bun](https://bun.sh) — the CLI is built on install because `dist/` is not
+checked into git.
+
 ```bash
-npm install -g @kitlangton/stack
+npm install -g github:cameronjlarsen/stack
 ```
+
+This installs the `stack` binary globally. If you previously installed
+`@kitlangton/stack` globally, this replaces it.
 
 Install the agent skill too:
 
 ```bash
-npx skills add kitlangton/stack --skill stack
+npx skills add cameronjlarsen/stack --skill stack
 ```
+
+Alternatively, clone this repo and run `npm install -g .` (same Bun requirement).
 
 Install and authenticate the matching host CLI:
 
