@@ -19,10 +19,11 @@ inspection, repair, merge, and undo workflows.
 ## Install
 
 Requires [Bun](https://bun.sh) — the CLI is built on install because `dist/` is not
-checked into git.
+checked into git. npm 11+ also needs `--allow-scripts` so the package `prepare`
+script can run (it builds `dist/cli.js`).
 
 ```bash
-npm install -g github:cameronjlarsen/stack
+npm install -g --allow-scripts=@kitlangton/stack github:cameronjlarsen/stack
 ```
 
 This installs the `stack` binary globally. If you previously installed
@@ -34,7 +35,8 @@ Install the agent skill too:
 npx skills add cameronjlarsen/stack --skill stack
 ```
 
-Alternatively, clone this repo and run `npm install -g .` (same Bun requirement).
+Alternatively, clone this repo and run
+`npm install -g --allow-scripts=@kitlangton/stack .` (same Bun requirement).
 
 Install and authenticate the matching host CLI:
 
