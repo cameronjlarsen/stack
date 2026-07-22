@@ -13,14 +13,14 @@
     "pull-requests",
     "stacked-prs"
   ],
-  "homepage": "https://github.com/kitlangton/stack#readme",
+  "homepage": "https://github.com/cameronjlarsen/stack#readme",
   "bugs": {
-    "url": "https://github.com/kitlangton/stack/issues"
+    "url": "https://github.com/cameronjlarsen/stack/issues"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kitlangton/stack.git"
+    "url": "git+https://github.com/cameronjlarsen/stack.git"
   },
   "bin": {
     "stack": "dist/cli.js"
@@ -47,6 +47,7 @@
     "format:check": "oxfmt --check .",
     "lint": "oxlint",
     "package:smoke": "bun run build && npm pack --dry-run",
+    "prepare": "bun run build",
     "prepack": "bun run build",
     "release": "bun run package:smoke && npm exec --package @changesets/cli@2.31.0 -- changeset publish",
     "typecheck": "tsc --noEmit",
