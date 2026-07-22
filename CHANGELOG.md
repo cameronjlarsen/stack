@@ -1,4 +1,4 @@
-# @kitlangton/stack
+# @cameronjlarsen/stack
 
 ## Unreleased
 
